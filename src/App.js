@@ -5,49 +5,54 @@ import './App.css';
 import $ from 'jquery';
 import { useForm } from "react-hook-form";
 
+export default class PlayerChecker extends React.Component {
 
+      constructor(props) {
+        super(props);
+        this.state = {
+          playerGuess: 'Elain',
+          result: 'n/a',
+        };
+      }
 
-function App() {
-    var playerStatus="n/a"
-
-    const {register, handleSubmit, errors} = useForm();
-
-    const onSubmit = data => {
-        var player = document.getElementById("playerCheck").value;
+      handleChange = (event) => {
+        this.setState({
+          playerGuess: event.target.value,
+            
+        });
+        var player = event.target.value;
         console.log("player: ",player)
+        var mainObj=this
         $.ajax({
             data:"QUERY="+player,
             url:'http://127.0.0.1:8080/query',
             method:'POST',
             success:function(data)
             {
-                console.log("dataaaaa: ",data)
-                playerStatus="found!"
-                document.getElementById("playerStatus").value=playerStatus
+                console.log("found: ",data)
+                mainObj.setState({
+                  result: player + " found!!!",
+                });
             },
             error: function()
             {
-                //alert(player,' not found!');
                 console.log("not found: ",player)
-                playerStatus="not found"
-                document.getElementById("playerStatus").value=playerStatus
+                mainObj.setState({
+                  result: player + " not found",
+                });
             }
         });
+      };
+
+      render() {
+        return (
+          <div>
+            <input
+              value={this.state.playerGuess}
+              onChange={this.handleChange}
+            />
+            <p>{this.state.result}</p>
+          </div>
+        );
+      }
     }
-    
-    return(
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <p>Enter a player name to check if she is in the database:</p>
-                <input id="playerCheck" type='text' placeholder="Elaine0"/>
-                <input type='submit'/>
-            </form>
-
-            <input id="playerStatus" value={playerStatus}/>
-        </div>
-    )
-  
-}
-
-export default App;
-
