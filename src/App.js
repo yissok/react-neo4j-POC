@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery';
 import { useForm } from "react-hook-form";
+import NeoVis from 'neovis.js/dist/neovis.js';
 
 export default class PlayerChecker extends React.Component {
 
@@ -13,6 +14,7 @@ export default class PlayerChecker extends React.Component {
           playerGuess: 'Elain',
           result: 'n/a',
         };
+        
       }
 
       handleChange = (event) => {
@@ -42,6 +44,9 @@ export default class PlayerChecker extends React.Component {
                 });
             }
         });
+          
+          
+          
       };
 
       render() {
@@ -56,3 +61,43 @@ export default class PlayerChecker extends React.Component {
         );
       }
     }
+    
+    
+    
+    
+function setUpGraph()
+{
+    var config={
+                container_id: "viz",
+                server_url:"bolt://54.87.236.230:34038",
+                server_user:"neo4j",
+                server_password:"friends-axis-conduct",
+                initial_cypher:"MATCH (m:Match)<-[sg:SCORED_GOAL]-(person:Person) WHERE person.name='Maren Meinert' MATCH p=(m:Match)-[it:IN_TOURNAMENT]->(Tournament) RETURN m,person,sg,p LIMIT 25",
+                labels:{
+                    "Person":{
+                        caption: "name",
+
+                    },
+                    "Match":{
+                        caption: "stage",
+                    },
+                    "Tournament":{
+                        caption: "name",
+                    }
+                },
+                relationships: {
+					"SCORED_GOAL": {
+                        caption: "minute"
+                    },
+					"IN_TOURNAMENT": {
+                        thickness: "1",
+                        caption: false
+                    }
+                },
+
+            }
+            var viz = new NeoVis(config);
+            viz.render();
+}
+
+setUpGraph();
