@@ -5,11 +5,38 @@
         <meta name="viewport"
               content="width=device-width, initial-scale=1" />
         <title>React App</title>
+        <style>
+            .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                background-color: #2196F3;
+                padding: 10px;
+            }
+            .grid-item {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+                height: 300px;
+            }
+        </style>
     </head>
 
     <body >
-        <p>Type names of players to see if they exist</p>
+        <p>Choose the area of where to browse among the top players</p>
+        <p>e.g. if you type 30 you will get 9 graphs; the first graph will point to the 30th person in the ranking; the 9th graph will point to the 39th; and so on...</p>
         <div id="root"></div>
-        <div id="viz" style="height: 500px"></div>
+        <div class="grid-container">
+            <div id="viz0" class="grid-item">0</div>
+            <div id="viz1" class="grid-item">1</div>
+            <div id="viz2" class="grid-item">2</div>
+            <div id="viz3" class="grid-item">3</div>  
+            <div id="viz4" class="grid-item">4</div>
+            <div id="viz5" class="grid-item">5</div>
+            <div id="viz6" class="grid-item">6</div>  
+            <div id="viz7" class="grid-item">7</div>
+            <div id="viz8" class="grid-item">8</div>
+        </div>
     </body>
 </html>
